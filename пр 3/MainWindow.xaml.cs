@@ -15,6 +15,7 @@ namespace пр_3
         public Classes.PersonInfo Player = new Classes.PersonInfo("Student", 100, 10, 1, 0, 0, 5);
         public List<Classes.PersonInfo> Enemys = new List<Classes.PersonInfo>();
         DispatcherTimer dispatcherTimer = new DispatcherTimer();
+        public Classes.PersonInfo Enemy;
 
         public MainWindow()
         {
@@ -29,10 +30,13 @@ namespace пр_3
             dispatcherTimer.Interval = new System.TimeSpan(0, 0, 10);
             dispatcherTimer.Start();
 
+            SelectEnemy();
+
         }
         private void AttackPlayer(object sender, System.EventArgs e)
         {
-            
+            Player.Healht -= Convert.ToInt32(Enemy.Damage * 100f / (100f - Player.Armor));
+            UserInfoPlayer();
         }
 
         public void UserInfoPlayer()
@@ -55,5 +59,18 @@ namespace пр_3
         {
 
         }
+        public void SelectEnemy()
+        {
+            int Id = new Random().Next(0, Enemys.Count);
+            Enemy = new Classes.PersonInfo(
+                Enemys[Id].Name,
+                Enemys[Id].Healht,
+                Enemys[Id].Armor,
+                Enemys[Id].Level,
+                Enemys[Id].Glasses,
+                Enemys[Id].Money,
+                Enemys[Id].Damage);
+        }
+
     }
 }
